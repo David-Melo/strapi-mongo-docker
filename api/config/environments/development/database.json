@@ -1,0 +1,21 @@
+{
+  "defaultConnection": "default",
+  "connections": {
+    "default": {
+      "settings": {
+        "client": "mongo",
+        "host": "mongodb",
+        "srv": false,
+        "port": "27017",
+        "database": "default",
+        "username": "SecretUser1a",
+        "password": "SecretWord1a"
+      },
+      "options": {
+        "authenticationDatabase": "default",
+        "ssl": false
+      },
+      "connector": "strapi-hook-mongoose"
+    }
+  }
+}
