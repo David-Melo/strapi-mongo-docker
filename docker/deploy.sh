@@ -4,7 +4,7 @@
 ####################################################
 ## Change Working Directory To laradock
 ####################################################
-cd /opt/api/desmtech
+cd /opt/desmtech
 
 ####################################################
 ## Run Docker Commands

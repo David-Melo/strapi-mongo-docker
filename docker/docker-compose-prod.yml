@@ -3,6 +3,8 @@ version: '3'
 networks:
   api_backend:
     driver: bridge
+  proxy:
+    external: true
 
 services:
 
@@ -17,6 +19,7 @@ services:
       - "443:443"
     networks:
       - api_backend
+      - proxy
     depends_on:
       - api
     tty: true
