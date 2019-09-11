@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  backend:
+  api_backend:
     driver: bridge
 
 services:
@@ -16,17 +16,22 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      - backend
+      - api_backend
     depends_on:
       - api
     tty: true
     restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`api.desm.tech`)"
+      - "traefik.http.routers.api.entrypoints=websecure"
+      - "traefik.http.routers.api.tls.certresolver=mytlschallenge"
 
   api:
     build: ./strapi
     image: strapi/strapi
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
       - APP_NAME=${APP_NAME}
       - HOST=${HOST}
       - DATABASE_CLIENT=${DATABASE_CLIENT}
@@ -35,9 +40,8 @@ services:
       - DATABASE_NAME=${DATABASE_NAME}
       - DATABASE_USERNAME=${DATABASE_USERNAME}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-      - DATABASE_AUTHENTICATION_DATABASE=${DATABASE_NAME}
     networks:
-      - backend
+      - api_backend
     volumes:
       - ../api:/usr/src/api/${APP_NAME}
     depends_on:
@@ -49,14 +53,11 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - backend
+      - api_backend
     volumes:
-      - strapi_mongo:/bitnami
+      - ../data:/bitnami
     environment:
       - MONGODB_ROOT_PASSWORD=${DATABASE_PASSWORD}
       - MONGODB_USERNAME=${DATABASE_USERNAME}
       - MONGODB_PASSWORD=${DATABASE_PASSWORD}
       - MONGODB_DATABASE=${DATABASE_NAME}
-
-volumes:
-  strapi_mongo:
