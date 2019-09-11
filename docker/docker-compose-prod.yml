@@ -23,9 +23,9 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`desm.tech`)"
-      - "traefik.http.routers.api.entrypoints=websecure"
-      - "traefik.http.routers.api.tls.certresolver=mytlschallenge"
+      - "traefik.http.routers.dt.rule=Host(`desm.tech`)"
+      - "traefik.http.routers.dt.entrypoints=websecure"
+      - "traefik.http.routers.dt.tls.certresolver=mytlschallenge"
 
   api:
     build: ./strapi
